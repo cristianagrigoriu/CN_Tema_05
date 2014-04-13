@@ -23,7 +23,7 @@ public class Main_Decomposition {
 			System.out.println();
 			System.out.println("--------------Problem 2--------------");
 			
-			m.computeEigenValue(5000);
+			m.computeEigenValue(5001);
 		}
 	}
 }

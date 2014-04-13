@@ -17,6 +17,7 @@ public class Decomposition_Helper {
 	private double[][] a;
 	private double[][] b;
 	private double[][] initialMatrix;
+	private int precision;
 	
 	static private ArrayList<List<RareMatrixElement>> values; 
 	
@@ -41,7 +42,12 @@ public class Decomposition_Helper {
 					count++;
 					continue;
 				}
-				if (count > 1) {
+				if (count == 2) {
+					this.precision = scanner.nextInt();
+					count++;
+					continue;
+				}
+				if (count > 2) {
 					initialMatrix[i][++j] = scanner.nextDouble();
 					 if (j == this.p) {
 						 i++;
@@ -78,6 +84,9 @@ public class Decomposition_Helper {
 		double[] dif;
 		
 		double[] v = this.report(this.RandomArray(number));
+		
+		System.out.println(this.euclideanNorm(v));
+		
 		double[] w = this.multiplyRareMatrixToArray(values, v);
 		double lambda = this.scalarProduct(w, v);
 		int k = 0;
@@ -89,11 +98,11 @@ public class Decomposition_Helper {
 			k++;
 			
 			dif = this.subtractArrays(w, this.multiplyScalarWithArray(lambda, v));
-		} while(this.euclideanNorm(dif) > Math.pow(10, -4) * number && k <= 100);
+		} while(this.euclideanNorm(dif) > Math.pow(10, -this.precision) * number && k <= 100);
 		
 		if (k <= 100) {
 			System.out.println("Valoarea proprie a sistemului este: " + lambda);
-			this.printArray(v, "Acesta este vectorul propriu asociat:");
+			//this.printArray(v, "Acesta este vectorul propriu asociat:");
 		}
 	}
 	
@@ -190,7 +199,7 @@ public class Decomposition_Helper {
 	}
 	
 	/**
-	 * Generates a random
+	 * Generates a random, simetric matrix, and stores it in a special way
 	 * @param number
 	 * @return
 	 */
